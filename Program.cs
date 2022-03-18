@@ -76,6 +76,7 @@ namespace habit_register
         private static void GetAllRecords()
         {
             Console.Clear();
+
             using (var connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
