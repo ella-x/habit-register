@@ -180,7 +180,7 @@ namespace habit_register
                 int minutes = GetNumberInput("\n\nPlease insert number of minutes of sleep(no decimals are allowed)\n\n");
 
                 var createTable = connection.CreateCommand();
-                createTable.CommandText = $"UPDATE sleeping_hours_per_day SET Date = '{date}', MinutesOfSleepPerDay = {minutes}, Id = {inputId}";
+                createTable.CommandText = $"UPDATE sleeping_hours_per_day SET Date = '{date}', MinutesOfSleepPerDay = {minutes}  WHERE Id = {inputId}";
 
                 createTable.ExecuteNonQuery();
                 connection.Close();
