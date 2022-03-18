@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "Q/0jysB21DN47o6xc+61Mxp6WuAJ+/uXkfDb+HBcoE5p7KYbn5gEB6BTzHgpffTlq9HfrzJVDXMrfZvMxkDtDA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\CRS\\source\\repos\\HabitRegister\\habit-register\\habit-register.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\CRS\\.nuget\\packages\\microsoft.data.sqlite\\6.0.0\\microsoft.data.sqlite.6.0.0.nupkg.sha512",
+    "C:\\Users\\CRS\\.nuget\\packages\\microsoft.data.sqlite.core\\6.0.0\\microsoft.data.sqlite.core.6.0.0.nupkg.sha512",
+    "C:\\Users\\CRS\\.nuget\\packages\\sqlite\\3.12.3\\sqlite.3.12.3.nupkg.sha512",
+    "C:\\Users\\CRS\\.nuget\\packages\\sqlite.native\\3.12.3\\sqlite.native.3.12.3.nupkg.sha512",
+    "C:\\Users\\CRS\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.0.6\\sqlitepclraw.bundle_e_sqlite3.2.0.6.nupkg.sha512",
+    "C:\\Users\\CRS\\.nuget\\packages\\sqlitepclraw.core\\2.0.6\\sqlitepclraw.core.2.0.6.nupkg.sha512",
+    "C:\\Users\\CRS\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.6\\sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512",
+    "C:\\Users\\CRS\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.0.6\\sqlitepclraw.provider.e_sqlite3.2.0.6.nupkg.sha512",
+    "C:\\Users\\CRS\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
+  ],
+  "logs": []
+}
