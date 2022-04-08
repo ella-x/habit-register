@@ -6,6 +6,7 @@ using Microsoft.Data.Sqlite;
 
 namespace habit_register
 {
+    [System.Runtime.InteropServices.Guid("AADDD6EC-CC4E-416D-8A29-D800978A72B7")]
     class Program
     {
         static string connectionString = @"Data Source = habitTracker.db";
@@ -36,15 +37,17 @@ namespace habit_register
             bool closeApp = false;
             while (closeApp == false)
             {
-                Console.WriteLine("\n\nMAIN MENU");
-                Console.WriteLine("\nWhat would you like to do");
+                int averageHoursOfSleep = GetTotalHours();
 
-                Console.WriteLine("\nType 0 to Close Application.");
-                Console.WriteLine("\nType 1 to View All Records.");
-                Console.WriteLine("\nType 2 to Insert Record.");
-                Console.WriteLine("\nType 3 to Delete Record.");
-                Console.WriteLine("\nType 4 to Update Record.");
-                Console.WriteLine("---------------------------------------\n");
+                Console.WriteLine("\n\n                  MAIN MENU");
+                Console.WriteLine("\n           What would you like to do");
+
+                Console.WriteLine("\n         Type 0 to Close Application.");
+                Console.WriteLine("\n         Type 1 to View All Records.");
+                Console.WriteLine("\n         Type 2 to Insert Record.");
+                Console.WriteLine("\n         Type 3 to Delete Record.");
+                Console.WriteLine("\n         Type 4 to Update Record.");
+                Console.WriteLine("----------------------------------------------------------\n");
                 string input = Console.ReadLine();
 
                 switch (input)
@@ -104,13 +107,13 @@ namespace habit_register
                     Console.WriteLine("No rows found");
                 }
                 connection.Close();
-                Console.WriteLine("---------------------------------------\n\n");
+                Console.WriteLine("----------------------------------------------------------\n\n");
                 foreach (var dw in tableData)
                 {
                     Console.WriteLine($"{dw.Id} - {dw.Date.ToString("dd-mm-yy")} - {dw.MinutesOfSleepPerDay}\n\n");
                 }
 
-                Console.WriteLine("---------------------------------------\n");
+                Console.WriteLine("----------------------------------------------------------\n");
             }
         }
         private static void Insert()
@@ -187,20 +190,8 @@ namespace habit_register
             }
 
         }
-        internal static string GetDateInput()
-        {
-            Console.WriteLine("\n\nPlease insert the date: (Format: dd-mm-yy).Type 0 to return to main menu.\n\n");
-            string dateInput = Console.ReadLine();
-            if (dateInput == "0") GetUserInput();
-            while (!DateTime.TryParseExact(dateInput, "dd-MM-yy", new CultureInfo("en-US"), DateTimeStyles.None, out _))
-            {
-                Console.WriteLine("\n\nInvalid date. (Format: dd-mm-yy).Type 0 to return to main menu.\n\n");
-                dateInput = Console.ReadLine();
-            }
-            return dateInput;
-        }
         internal static int GetNumberInput(string message)
-        { 
+        {
             Console.WriteLine(message);
             string numberInput = Console.ReadLine();
             if (numberInput == "0") GetUserInput();
@@ -212,6 +203,55 @@ namespace habit_register
             }
             int finalInput = Convert.ToInt32(numberInput);
             return finalInput;
+        }
+        internal static string GetDateInput()
+        {
+            DateTime startDate = new DateTime(2022, 1, 1, 8, 0, 1);
+            DateTime endDate = new DateTime(2022, 6, 1, 8, 0, 1);
+            DateTime currentDate = DateTime.Now;
+            TimeSpan interval = currentDate - startDate;
+
+            Console.WriteLine("\n\nPlease insert the date: (Format: dd-mm-yy).Type 0 to return to main menu.\n\n");
+            string dateInput = Console.ReadLine();
+            if (dateInput == "0") GetUserInput();
+            while (!DateTime.TryParseExact(dateInput, "dd-MM-yy", new CultureInfo("en-US"), DateTimeStyles.None, out _))
+            {
+                if (Convert.ToDateTime(dateInput) < startDate.Date || Convert.ToDateTime(dateInput) > endDate.Date)
+                {
+                    Console.WriteLine("\n\nInvalid date. Your sleeping hours tracer period is between 01/01/2002 to 01/06/2022 \n\n (Format: dd-mm-yy).Type 0 to return to main menu.\n\n");
+                }
+                    dateInput = Console.ReadLine();
+            }
+            return dateInput;
+            //double totalDays = interval.Days;
+        }
+
+        private static int GetTotalHours()
+        {
+            int totalHoursTillNow;
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var createTable = connection.CreateCommand();
+
+                createTable.CommandText = $"SELECT ROUND(AVG(MinutesOfSleepPerDay)/60) from sleeping_hours_per_day";
+
+                totalHoursTillNow = Convert.ToInt32(createTable.ExecuteScalar());
+                connection.Close();
+            }
+            int totalHours = Convert.ToInt32(totalHoursTillNow);
+
+            Console.WriteLine("\n\n\n\n----------------------------------------------------------\n");
+            Console.WriteLine("\nYour average sleeping hours calculated till now: " + totalHours +"\n\n");
+            Console.WriteLine("\n----------------------------------------------------------\n\n");
+            if (totalHours < 7 || totalHours > 9)
+            {
+                Console.WriteLine("       Keep your sleeping hours on track\n\n");
+                Console.WriteLine(" Most adults need 7 to 9 hours, although some people may need around 6 hours to 10 hours of sleep each day.");
+                Console.WriteLine(" Older adults (ages 65 and older) need 7-8 hours of sleep each day.");
+                Console.WriteLine(" Women in the first 3 months of pregnancy often need several more hours of sleep than usual");
+            }
+            return totalHours;
         }
     }
     public class HoursOfSleep
